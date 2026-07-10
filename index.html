@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Казначей 💰</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0D0D1A;
+  color: #fff;
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+}
+
+.container { max-width: 480px; margin: 0 auto; }
+
+/* Header */
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; }
+.header-title { font-size:22px; font-weight:800; }
+.header-sub { font-size:13px; color:#888; margin-top:2px; }
+.month-badge {
+  background:#1E1E35;
+  border:1px solid #2a2a50;
+  border-radius:20px;
+  padding:6px 14px;
+  font-size:13px;
+  color:#aaa;
+  cursor:pointer;
+}
+
+/* Total card */
+.total-card {
+  background: linear-gradient(135deg, #7B61FF 0%, #FF6B9D 100%);
+  border-radius:20px;
+  padding:24px;
+  margin-bottom:20px;
+}
+.total-label { font-size:13px; opacity:0.8; margin-bottom:6px; }
+.total-amount { font-size:40px; font-weight:800; line-height:1; }
+.total-currency { font-size:18px; font-weight:500; opacity:0.7; margin-left:6px; }
+.total-sub { font-size:13px; opacity:0.75; margin-top:8px; }
+
+.members-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+.member-chip {
+  background:rgba(255,255,255,0.15);
+  border-radius:12px;
+  padding:10px 14px;
+}
+.member-chip-name { font-size:12px; opacity:0.8; }
+.member-chip-amount { font-size:18px; font-weight:700; margin-top:2px; }
+
+/* Section title */
+.section-title {
+  font-size:13px;
+  font-weight:600;
+  color:#888;
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  margin:24px 0 12px;
+}
+
+/* Categories */
+.cat-list { display:flex; flex-direction:column; gap:10px; }
+.cat-row {
+  background:#1A1A2E;
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.cat-emoji { font-size:22px; width:36px; text-align:center; }
+.cat-info { flex:1; }
+.cat-name { font-size:14px; font-weight:600; }
+.cat-bar-wrap { height:4px; background:#2a2a45; border-radius:4px; margin-top:6px; }
+.cat-bar { height:4px; border-radius:4px; }
+.cat-amount { font-size:15px; font-weight:700; text-align:right; white-space:nowrap; }
+.cat-pct { font-size:11px; color:#666; text-align:right; }
+
+/* Transactions */
+.tx-list { display:flex; flex-direction:column; gap:8px; }
+.tx-row {
+  background:#1A1A2E;
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.tx-icon {
+  width:38px; height:38px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+  flex-shrink:0;
+}
+.tx-info { flex:1; min-width:0; }
+.tx-name { font-size:14px; font-weight:600; }
+.tx-meta { font-size:12px; color:#666; margin-top:2px; }
+.tx-right { text-align:right; }
+.tx-amount { font-size:15px; font-weight:700; }
+.tx-member { font-size:11px; color:#666; margin-top:2px; }
+.recurring-dot {
+  display:inline-block; width:6px; height:6px;
+  background:#7B61FF; border-radius:50%;
+  margin-right:4px; vertical-align:middle;
+}
+
+/* Month tabs */
+.month-tabs { display:flex; gap:8px; margin-bottom:4px; overflow-x:auto; padding-bottom:4px; }
+.month-tab {
+  background:#1A1A2E;
+  border:2px solid transparent;
+  border-radius:20px;
+  padding:6px 16px;
+  font-size:13px;
+  font-weight:500;
+  color:#888;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all 0.2s;
+}
+.month-tab.active {
+  border-color:#7B61FF;
+  color:#fff;
+  background:#1E1830;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div>
+      <div class="header-title">Казначей 💰</div>
+      <div class="header-sub">Семейный бюджет</div>
+    </div>
+  </div>
+
+  <div class="month-tabs" id="monthTabs"></div>
+
+  <div class="total-card">
+    <div class="total-label">Расходы за месяц</div>
+    <div>
+      <span class="total-amount" id="totalAmount">0</span>
+      <span class="total-currency">руб.</span>
+    </div>
+    <div class="total-sub" id="totalSub"></div>
+    <div class="members-row">
+      <div class="member-chip">
+        <div class="member-chip-name">🌸 Аня</div>
+        <div class="member-chip-amount" id="wifeTotal">0 руб.</div>
+      </div>
+      <div class="member-chip">
+        <div class="member-chip-name">🧢 Муж</div>
+        <div class="member-chip-amount" id="husbandTotal">0 руб.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">По категориям</div>
+  <div class="cat-list" id="catList"></div>
+
+  <div class="section-title">Последние операции</div>
+  <div class="tx-list" id="txList"></div>
+
+</div>
+
+<script>
+let DATA = null;
+let activeMonth = null;
+
+async function loadData() {
+  const res = await fetch('data.json?t=' + Date.now());
+  DATA = await res.json();
+  init();
+}
+
+function toBase(amount, currency) {
+  const rates = DATA.rates;
+  return amount / (rates[currency] || 1);
+}
+
+function formatAmount(amount, currency) {
+  const sym = DATA.currencies.find(c => c.code === currency);
+  if (currency === 'USD') return '$' + amount;
+  return amount + ' ' + (sym ? sym.symbol : currency);
+}
+
+function formatBase(amount) {
+  return Math.round(amount).toLocaleString('ru') + ' руб.';
+}
+
+function getMonths(expenses) {
+  const months = new Set();
+  expenses.forEach(e => {
+    const d = new Date(e.date);
+    months.add(d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0'));
+  });
+  return Array.from(months).sort().reverse();
+}
+
+function monthLabel(ym) {
+  const [y, m] = ym.split('-');
+  const names = ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
+  return names[parseInt(m)-1] + ' ' + y;
+}
+
+function init() {
+  const months = getMonths(DATA.expenses);
+  activeMonth = activeMonth || months[0];
+
+  // Tabs
+  const tabsEl = document.getElementById('monthTabs');
+  tabsEl.innerHTML = months.map(m =>
+    `<div class="month-tab ${m===activeMonth?'active':''}" onclick="selectMonth('${m}')">${monthLabel(m)}</div>`
+  ).join('');
+
+  render();
+}
+
+function selectMonth(m) {
+  activeMonth = m;
+  init();
+}
+
+function render() {
+  const [y, mo] = activeMonth.split('-');
+  const expenses = DATA.expenses.filter(e => {
+    const d = new Date(e.date);
+    return d.getFullYear() === parseInt(y) && (d.getMonth()+1) === parseInt(mo);
+  });
+
+  // Totals
+  let total = 0, wifeTotal = 0, husbandTotal = 0;
+  expenses.forEach(e => {
+    const base = toBase(e.amount, e.currency);
+    total += base;
+    if (e.member === 'wife') wifeTotal += base;
+    else husbandTotal += base;
+  });
+
+  document.getElementById('totalAmount').textContent = Math.round(total).toLocaleString('ru');
+  document.getElementById('totalSub').textContent = expenses.length + ' операций · ' + monthLabel(activeMonth);
+  document.getElementById('wifeTotal').textContent = formatBase(wifeTotal);
+  document.getElementById('husbandTotal').textContent = formatBase(husbandTotal);
+
+  // Categories
+  const catTotals = {};
+  DATA.categories.forEach(c => catTotals[c.id] = 0);
+  expenses.forEach(e => {
+    catTotals[e.category] = (catTotals[e.category] || 0) + toBase(e.amount, e.currency);
+  });
+  const maxCat = Math.max(...Object.values(catTotals), 1);
+
+  const catEl = document.getElementById('catList');
+  catEl.innerHTML = DATA.categories
+    .filter(c => catTotals[c.id] > 0)
+    .sort((a,b) => catTotals[b.id] - catTotals[a.id])
+    .map(c => {
+      const amt = catTotals[c.id];
+      const pct = Math.round(amt / total * 100);
+      const barW = Math.round(amt / maxCat * 100);
+      return `<div class="cat-row">
+        <div class="cat-emoji">${c.emoji}</div>
+        <div class="cat-info">
+          <div class="cat-name">${c.name}</div>
+          <div class="cat-bar-wrap"><div class="cat-bar" style="width:${barW}%;background:${c.color}"></div></div>
+        </div>
+        <div>
+          <div class="cat-amount">${formatBase(amt)}</div>
+          <div class="cat-pct">${pct}%</div>
+        </div>
+      </div>`;
+    }).join('');
+
+  // Transactions
+  const txEl = document.getElementById('txList');
+  const sorted = [...expenses].sort((a,b) => new Date(b.date)-new Date(a.date));
+  txEl.innerHTML = sorted.slice(0,10).map(e => {
+    const cat = DATA.categories.find(c => c.id === e.category) || {};
+    const member = DATA.members[e.member] || {};
+    const d = new Date(e.date);
+    const dateStr = d.getDate() + '.' + String(d.getMonth()+1).padStart(2,'0') + ' ' +
+                    String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    return `<div class="tx-row">
+      <div class="tx-icon" style="background:${cat.color}22">${cat.emoji||'💸'}</div>
+      <div class="tx-info">
+        <div class="tx-name">${cat.name||e.category} ${e.recurring?'<span class="recurring-dot"></span>':''}
+        </div>
+        <div class="tx-meta">${dateStr} · ${e.source==='bot'?'бот':'приложение'}</div>
+      </div>
+      <div class="tx-right">
+        <div class="tx-amount" style="color:${cat.color}">${formatAmount(e.amount, e.currency)}</div>
+        <div class="tx-member">${member.emoji||''} ${member.name||e.member}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+loadData();
+</script>
+</body>
+</html>
