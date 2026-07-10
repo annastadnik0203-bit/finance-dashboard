@@ -1,0 +1,40 @@
+{
+  "currencies": [
+    { "code": "PRB", "symbol": "руб.", "short": "ПМР рубль", "name": "Приднестровский рубль" },
+    { "code": "MDL", "symbol": "L",    "short": "Лей",       "name": "Молдавский лей" },
+    { "code": "USD", "symbol": "$",    "short": "Доллар",    "name": "Доллар" }
+  ],
+  "baseCurrency": "PRB",
+  "activeCurrency": "PRB",
+  "rates": { "PRB": 1, "MDL": 0.95, "USD": 16.5 },
+  "members": {
+    "wife": { "name": "Аня", "emoji": "🌸" },
+    "husband": { "name": "Муж", "emoji": "🧢" }
+  },
+  "categories": [
+    { "id": "food",        "name": "Еда",          "emoji": "🍔", "color": "#7B61FF" },
+    { "id": "transport",   "name": "Транспорт",    "emoji": "🚕", "color": "#5AC8FA" },
+    { "id": "home",        "name": "Дом",          "emoji": "🏠", "color": "#FF9F7A" },
+    { "id": "fun",         "name": "Развлечения",  "emoji": "🎬", "color": "#FF6B9D" },
+    { "id": "health",      "name": "Здоровье",     "emoji": "💊", "color": "#4ECDC4" }
+  ],
+  "expenses": [
+    { "id": 1,  "amount": 1850, "currency": "PRB", "category": "food",      "member": "wife",    "date": "2026-07-09T09:20:00", "source": "app", "recurring": false },
+    { "id": 2,  "amount": 420,  "currency": "PRB", "category": "transport", "member": "husband", "date": "2026-07-09T08:05:00", "source": "bot", "recurring": false },
+    { "id": 3,  "amount": 3200, "currency": "PRB", "category": "home",      "member": "wife",    "date": "2026-07-08T19:40:00", "source": "app", "recurring": true },
+    { "id": 4,  "amount": 15,   "currency": "USD", "category": "fun",       "member": "husband", "date": "2026-07-07T21:10:00", "source": "bot", "recurring": true },
+    { "id": 5,  "amount": 120,  "currency": "MDL", "category": "health",    "member": "wife",    "date": "2026-07-06T14:30:00", "source": "app", "recurring": false },
+    { "id": 6,  "amount": 640,  "currency": "PRB", "category": "food",      "member": "husband", "date": "2026-07-05T13:00:00", "source": "app", "recurring": false },
+    { "id": 7,  "amount": 300,  "currency": "PRB", "category": "fun",       "member": "wife",    "date": "2026-07-03T20:00:00", "source": "app", "recurring": false },
+
+    { "id": 8,  "amount": 3200, "currency": "PRB", "category": "home",      "member": "wife",    "date": "2026-06-08T19:00:00", "source": "app", "recurring": true },
+    { "id": 9,  "amount": 2600, "currency": "PRB", "category": "food",      "member": "wife",    "date": "2026-06-12T12:30:00", "source": "app", "recurring": false },
+    { "id": 10, "amount": 2600, "currency": "PRB", "category": "food",      "member": "husband", "date": "2026-06-24T18:10:00", "source": "bot", "recurring": false },
+    { "id": 11, "amount": 900,  "currency": "PRB", "category": "transport", "member": "husband", "date": "2026-06-15T09:00:00", "source": "bot", "recurring": false },
+    { "id": 12, "amount": 15,   "currency": "USD", "category": "fun",       "member": "husband", "date": "2026-06-07T21:10:00", "source": "bot", "recurring": true },
+
+    { "id": 13, "amount": 3200, "currency": "PRB", "category": "home",      "member": "wife",    "date": "2026-05-08T19:00:00", "source": "app", "recurring": true },
+    { "id": 14, "amount": 4800, "currency": "PRB", "category": "food",      "member": "wife",    "date": "2026-05-14T12:00:00", "source": "app", "recurring": false },
+    { "id": 15, "amount": 700,  "currency": "PRB", "category": "transport", "member": "husband", "date": "2026-05-20T09:30:00", "source": "app", "recurring": false }
+  ]
+}
